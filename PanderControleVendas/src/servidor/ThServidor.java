@@ -28,13 +28,12 @@ public class ThServidor extends Thread {
     /**
      * @param args the command line arguments
      */
-   private ServerSocket[] s0;// = new ServerSocket[ControleCliente.getNUMPORTAS()];
-    //   private ServerSocket s1;
-    //   private ServerSocket s2;
-    private Socket[] sA = new Socket[ControleCliente.getNUMPORTAS()];
-//    private Socket sB;
-//    private Socket sC;
-
+    private ServerSocket s0;// = new ServerSocket[ControleCliente.getNUMPORTAS()];
+    private ServerSocket s1;
+    private ServerSocket s2;
+    private Socket sA;// = new Socket[ControleCliente.getNUMPORTAS()];
+    private Socket sB;
+    private Socket sC;
 
     private DefaultListModel<String> clienteON;
     private DefaultListModel<String> clienteOFF;
@@ -51,25 +50,33 @@ public class ThServidor extends Thread {
         this.clienteON = clienteON;
         this.clienteOFF = clienteOFF;
         this.txtNumClientes = txtNumClientes;
-        s0 = new ServerSocket[ControleCliente.getNUMPORTAS()];
-        
+        try {
+            s0 = new ServerSocket();
+            s1 = new ServerSocket();
+            s2 = new ServerSocket();
+        } catch (IOException ex) {
+            Logger.getLogger(ThServidor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        sA = new Socket();
+        sB = new Socket();
+        sC = new Socket();
+
         preActions();
     }
 
     public void pararServ() {
         //      this.thcliente.interrupt();
         try {
-            clienteOFF.insertElementAt(numCliente + " - IP: " + sA[0].getInetAddress(), 0);
+            clienteOFF.insertElementAt(numCliente + " - IP: " + sA.getInetAddress(), 0);
 
         } catch (Exception ex) {
 
         }
         try {
-            for (int i = 0; i < ControleCliente.getNUMPORTAS(); i++) {
-                s0[i].close();
-            }
-//            s1.close();
-//            s2.close();
+            s0.close();
+            s1.close();
+            s2.close();
         } catch (IOException ex) {
             Logger.getLogger(ThServidor.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -81,15 +88,11 @@ public class ThServidor extends Thread {
         ipCliente = "255.255.255.1";
 
         try {
-            for (int i = 0; i < ControleCliente.getNUMPORTAS(); i++) {
-//                int x[] = new int[ControleCliente.getNUMPORTAS()];
-//                x = ControleCliente.getPortas();
-                s0[i] = new ServerSocket(5050+i);
-            }
-//            s1 = new ServerSocket(6060);
-//            s2 = new ServerSocket(6060);
+            s0 = new ServerSocket(ControleCliente.getPorta(0));
+            s1 = new ServerSocket(ControleCliente.getPorta(1));
+            s2 = new ServerSocket(ControleCliente.getPorta(2));
         } catch (IOException ex) {
-            Logger.getLogger(JFPrinicipalServidor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ThServidor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -129,15 +132,17 @@ public class ThServidor extends Thread {
         while (true) {
 
             try {
-                for (int i = 0; i < ControleCliente.getNUMPORTAS(); i++) {
-                    sA[i] = s0[i].accept();
-                }
-//                sB = s1.accept();
-                for (int i = 0; i < ControleCliente.getNUMPORTAS(); i++) {
-                    new ThCliente(sA[i]).start();
-//                    new ThProduto(sB).start();
-                    System.out.println("Cliente Conectado - Porta <" + ControleCliente.getPortas() + "> " + sA[i].isConnected());
-                }
+//                for (int i = 0; i < ControleCliente.getNUMPORTAS(); i++) {
+                    sA = s0.accept();
+//                }
+                sB = s1.accept();
+                sC = s2.accept();
+//                for (int i = 0; i < ControleCliente.getNUMPORTAS(); i++) {
+                    new ThCliente(sA).start();
+                    new ThProduto(sB).start();
+                    new ThPedido(sC).start();
+                    System.out.println("Cliente Conectado - Porta <" + ControleCliente.getTodasPortas() + "> " + sA.isConnected());
+//                }
 //                System.out.println("Cliente Conectado Porta 6060> " + sB.isConnected());
 
             } catch (IOException ex) {
@@ -146,9 +151,9 @@ public class ThServidor extends Thread {
 
             numCliente++;
             txtNumClientes.setText("" + numCliente);
-            clienteON.insertElementAt(numCliente + " - IP: " + sA[0].getInetAddress(), 0);
+            clienteON.insertElementAt(numCliente + " - IP: " + sA.getInetAddress(), 0);
 
-            System.out.println("ip>" + sA[0].getInetAddress());
+            System.out.println("ip>" + sA.getInetAddress());
         }
     }
 }

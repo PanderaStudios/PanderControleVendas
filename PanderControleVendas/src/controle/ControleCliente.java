@@ -34,8 +34,12 @@ public class ControleCliente {
         return NUMPORTAS;
     }
 
-    public static int[] getPortas() {
+    public static int[] getTodasPortas() {
         return portas;
+    }
+
+    public static int getPorta(int i) {
+        return portas[i];
     }
 
     /**
