@@ -25,22 +25,22 @@ public class ThProduto extends Thread {
                 String comando = c1.receberTexto();
 
                 if ("P".equals(comando)) {
-                    System.out.println("ServidorProduto ThProduto - persistir");
-                    c1.enviarTexto("ServidorProduto ThProduto - persistir");
+                    System.out.println("Servidor ThProduto - persistir");
+                    c1.enviarTexto("Servidor ThProduto - persistir");
                     cProduto.persistir((Produto) c1.receberObjeto());
                     ControleProduto.armazenar();
                 }
 
                 if ("R".equals(comando)) {
-                    System.out.println("ServidorProduto ThProduto - remover");
-                    c1.enviarTexto("ServidorProduto ThProduto - remover");
+                    System.out.println("Servidor ThProduto - remover");
+                    c1.enviarTexto("Servidor ThProduto - remover");
                     cProduto.remover(c1.receberTexto());
                     ControleProduto.armazenar();
                 }
 
                 if ("O".equals(comando)) {
-                    System.out.println("ServidorProduto ThProduto - obter");
-                    c1.enviarTexto("ServidorProduto ThProduto - obter");
+                    System.out.println("Servidor ThProduto - obter");
+                    c1.enviarTexto("Servidor ThProduto - obter");
                     String cpf = c1.receberTexto();
                     c1.enviarObjeto(cProduto.obter(cpf));
                 }
@@ -54,8 +54,8 @@ public class ThProduto extends Thread {
                 }
 
                 if ("T".equals(comando)) {
-                    System.out.println("ServidorProduto ThProduto - obter todos");
-                    c1.enviarTexto("ServidorProduto ThProduto - obter todos");
+                    System.out.println("Servidor ThProduto - obter todos");
+                    c1.enviarTexto("Servidor ThProduto - obter todos");
                     c1.enviarObjeto(cProduto.obterTodos());
                 }
 

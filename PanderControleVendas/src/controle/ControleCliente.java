@@ -19,27 +19,27 @@ public class ControleCliente {
     private static HashMap<String, Cliente> bancoClientes = new HashMap<>();
 
     private static final int NUMPORTAS = 3;
-    private static int[] portas;
+    private static int[] portas =  new int[NUMPORTAS];
 
     public ControleCliente() { //throws IOException, ClassNotFoundException{
         // ControleCliente.carregar();
-        portas = new int[NUMPORTAS];
+//        portas = new int[NUMPORTAS];
         //carrega array com as portas dos arquivos a partir da 5050
-        for (int i = 0; i < NUMPORTAS; i++) {
-            portas[i] = 5050 + i;
-        }
+//        for (int i = 0; i < NUMPORTAS; i++) {
+//            portas[i] = 5050 + i;
+//        }
     }
 
     public static int getNUMPORTAS() {
         return NUMPORTAS;
     }
 
-    public static int[] getTodasPortas() {
-        return portas;
-    }
-
-    public static int getPorta(int i) {
-        return portas[i];
+    public static int getPorta(int indice) {
+        //carrega array com as portas dos arquivos a partir da 5050
+        for (int i = 0; i < NUMPORTAS; i++) {
+            portas[i] = 5050 + i;
+        }
+        return portas[indice];
     }
 
     /**

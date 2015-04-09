@@ -141,7 +141,7 @@ public class ThServidor extends Thread {
                     new ThCliente(sA).start();
                     new ThProduto(sB).start();
                     new ThPedido(sC).start();
-                    System.out.println("Cliente Conectado - Porta <" + ControleCliente.getTodasPortas() + "> " + sA.isConnected());
+                    System.out.println("Cliente Conectado - Porta <" + "> " + sA.isConnected());
 //                }
 //                System.out.println("Cliente Conectado Porta 6060> " + sB.isConnected());
 
