@@ -39,11 +39,11 @@ public class JFPrincipal extends javax.swing.JFrame {
     }
 
     protected ArrayList<Produto> obterTodosProdutos() {
-        return cProduto.obterTodos();
+        return cProduto.obterTodosProdutos();
     }
 
     protected ArrayList<Pedido> obterTodosPedidos() {
-        return cPedido.obterTodos();
+        return cPedido.obterTodosPedidos();
     }
 
     protected TableModel getDadosTabela() {

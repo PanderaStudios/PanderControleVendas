@@ -105,7 +105,7 @@ public class ControleProduto {
         }
     }
 
-    public ArrayList<Produto> obterTodos() {
+    public ArrayList<Produto> obterTodosProdutos() {
         ArrayList<Produto> lista = new ArrayList<>();
         lista.addAll(bancoProdutos.values());
         Collections.sort(lista, new Comparator<Produto>() {

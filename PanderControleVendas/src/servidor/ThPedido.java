@@ -56,10 +56,10 @@ public class ThPedido extends Thread {
                 if ("T".equals(comando)) {
                     System.out.println("Servidor ThPedido - obter todos");
                     c1.enviarTexto("Servidor ThPedido - obter todos");
-                    c1.enviarObjeto(cPedido.obterTodos());
+                    c1.enviarObjeto(cPedido.obterTodosPedidos());
                 }
 
-//                c1.enviarObjeto(cPedido.obterTodos());
+//                c1.enviarObjeto(cPedido.obterTodosPedidos());
 
             }
         } catch (IOException | ClassNotFoundException ex) {

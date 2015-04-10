@@ -120,7 +120,7 @@ public class ControlePedido {
         }
     }
 
-    public ArrayList<Pedido> obterTodos() {
+    public ArrayList<Pedido> obterTodosPedidos() {
         ArrayList<Pedido> lista = new ArrayList<>();
         lista.addAll(bancoPedidos.values());
         Collections.sort(lista, (Pedido t1, Pedido t2)

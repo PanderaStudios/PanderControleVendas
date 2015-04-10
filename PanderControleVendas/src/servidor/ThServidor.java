@@ -129,12 +129,12 @@ public class ThServidor extends Thread {
                     sA[i] = s0[i].accept();
                 }
 
-                new ThCliente(sA[0]).start();
-                new ThProduto(sA[1]).start();
+                new ThCliente(sA[0],0).start();
+                new ThCliente(sA[1],1).start();
                 new ThPedido(sA[2]).start();
 
                 for (int i = 0; i < ControleCliente.getNUMPORTAS(); i++) {
-                    System.out.println("Cliente Conectado Porta <5050> " + sA[i].isConnected());
+                    System.out.println("Cliente Conectado Porta <"+ControleCliente.getPorta(i)+"> " + sA[i].isConnected());
                 }
 
             } catch (IOException ex) {
