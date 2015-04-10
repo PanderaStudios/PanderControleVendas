@@ -132,18 +132,17 @@ public class ThServidor extends Thread {
         while (true) {
 
             try {
-//                for (int i = 0; i < ControleCliente.getNUMPORTAS(); i++) {
-                    sA = s0.accept();
-//                }
+                sA = s0.accept();
                 sB = s1.accept();
                 sC = s2.accept();
-//                for (int i = 0; i < ControleCliente.getNUMPORTAS(); i++) {
-                    new ThCliente(sA).start();
-                    new ThProduto(sB).start();
-                    new ThPedido(sC).start();
-                    System.out.println("Cliente Conectado - Porta <" + "> " + sA.isConnected());
-//                }
-//                System.out.println("Cliente Conectado Porta 6060> " + sB.isConnected());
+
+                new ThCliente(sA).start();
+                new ThProduto(sB).start();
+                new ThPedido(sC).start();
+
+                System.out.println("Cliente Conectado Porta <5050> " + sA.isConnected());
+                System.out.println("Cliente Conectado Porta <5051> " + sB.isConnected());
+                System.out.println("Cliente Conectado Porta <5052> " + sC.isConnected());
 
             } catch (IOException ex) {
                 Logger.getLogger(ThServidor.class.getName()).log(Level.SEVERE, null, ex);

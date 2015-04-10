@@ -33,6 +33,7 @@ public class JFPrincipalRemota extends JFPrincipal {
         System.out.println("CLIENTE - Vetor Produtos vazio> " + lista2.isEmpty());
     }
 
+    @Override
     protected void remover(String cpf) {
         try {
             c1c[0].enviarTexto("R");
@@ -45,6 +46,7 @@ public class JFPrincipalRemota extends JFPrincipal {
         }
     }
 
+    @Override
     protected void removerProduto(String cpf) {
         try {
             c1c[1].enviarTexto("R");
@@ -57,6 +59,7 @@ public class JFPrincipalRemota extends JFPrincipal {
         }
     }
 
+    @Override
     protected void removerPedido(String cpf) {
         try {
             c1c[2].enviarTexto("R");
@@ -69,6 +72,7 @@ public class JFPrincipalRemota extends JFPrincipal {
         }
     }
 
+    @Override
     protected void persistir(Cliente c, String cpf) {
         JDDadosCliente dadosC = new JDDadosCliente(this, true);
         dadosC.setDados(c, cpf);
@@ -86,6 +90,7 @@ public class JFPrincipalRemota extends JFPrincipal {
         }
     }
 
+    @Override
     protected void persistirProduto(Produto p, String cpf) {
         JDDadosProduto dadosP = new JDDadosProduto(this, true);
         dadosP.setDados(p, cpf);
@@ -104,6 +109,7 @@ public class JFPrincipalRemota extends JFPrincipal {
         }
     }
 
+    @Override
     protected void persistirPedido(Pedido ped, String cod) {
         JDDadosPedidos dadosPed = new JDDadosPedidos(this, true);
         dadosPed.setDados(ped, cod);
@@ -122,6 +128,7 @@ public class JFPrincipalRemota extends JFPrincipal {
         }
     }
 
+    @Override
     protected Cliente obter(String cpf) {
         try {
             c1c[0].enviarTexto("O");
@@ -134,6 +141,7 @@ public class JFPrincipalRemota extends JFPrincipal {
         }
     }
 
+    @Override
     protected Produto obterProduto(String cpf) {
         try {
             c1c[1].enviarTexto("O");
@@ -146,6 +154,7 @@ public class JFPrincipalRemota extends JFPrincipal {
         }
     }
 
+    @Override
     protected Pedido obterPedido(String cod) {
         try {
             c1c[2].enviarTexto("O");
@@ -158,6 +167,7 @@ public class JFPrincipalRemota extends JFPrincipal {
         }
     }
 
+    @Override
     protected ArrayList<Cliente> obterTodos() {
         try {
             c1c[0].enviarTexto("T");
@@ -169,6 +179,7 @@ public class JFPrincipalRemota extends JFPrincipal {
         }
     }
 
+    @Override
     protected ArrayList<Produto> obterTodosProdutos() {
         try {
             c1c[1].enviarTexto("T");
@@ -180,7 +191,8 @@ public class JFPrincipalRemota extends JFPrincipal {
         }
     }
 
-    protected ArrayList<Pedido> obterTodosPeidos() {
+    @Override
+    protected ArrayList<Pedido> obterTodosPedidos() {
         try {
             c1c[2].enviarTexto("T");
             System.out.println(c1c[2].receberTexto());
