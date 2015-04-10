@@ -90,7 +90,7 @@ public class ControleProduto {
     }
 
     public void persistir(Produto produto) {
-        bancoProdutos.put(produto.getCpf(), produto);
+        bancoProdutos.put(produto.getCod(), produto);
     }
 
     public void remover(String cpf) {

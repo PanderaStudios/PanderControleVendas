@@ -17,9 +17,10 @@ public class JFPrincipalRemota extends JFPrincipal {
     private final int NUMPORTAS = 3;
 
     public JFPrincipalRemota() {
+        preActions();
       }
 
-    ControleComunicacao c1c[];// = new ControleComunicacao[NUMPORTAS];
+    ControleComunicacao c1c[] = new ControleComunicacao[NUMPORTAS];
 //    ControleComunicacao c2p;
 
     private void carregaTabelas() {
@@ -221,7 +222,7 @@ public class JFPrincipalRemota extends JFPrincipal {
             System.out.println("Conectado Porta 5051> " + s2p.isConnected());
 
             Socket s3pd = new Socket(ipServidor, 5052);
-            System.out.println("Conectado Porta 5051> " + s3pd.isConnected());
+            System.out.println("Conectado Porta 5052> " + s3pd.isConnected());
 
             c1c[0] = new ControleComunicacao(s1c);
             c1c[1] = new ControleComunicacao(s2p);

@@ -19,7 +19,7 @@ public class JDDadosProduto extends javax.swing.JDialog {
 //    private ControleProduto pProduto;
 
         public void setDados(Produto p, String cpf){
-            txtCPF.setText((p==null)?cpf:p.getCpf());
+            txtCPF.setText((p==null)?cpf:p.getCod());
             txtNomeProduto.setText((p==null)?"":p.getNome());
             txtQtdProduto.setText((String) ((p==null)?"":p.getQuantidade()));
             txtValorProduto.setText((String) ((p==null)?"":p.getValor()));

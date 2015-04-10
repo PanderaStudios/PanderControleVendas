@@ -34,7 +34,7 @@ public class Produto implements Serializable {
     /**
      * @return the cpf
      */
-    public String getCpf() {
+    public String getCod() {
         return cpf;
     }
 

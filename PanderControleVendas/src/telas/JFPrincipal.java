@@ -50,14 +50,14 @@ public class JFPrincipal extends javax.swing.JFrame {
         ArrayList<Cliente> lista = obterTodos();
         String[] titulos
                 = {"CPF", "Nome", "Endereco", "Telefone"};
-        Object[][] valores = new Object[lista.size()][4];
+        Object[][] valores0 = new Object[lista.size()][4];
         for (int i = 0; i < lista.size(); i++) {
-            valores[i][0] = lista.get(i).getCpf();
-            valores[i][1] = lista.get(i).getNome();
-            valores[i][2] = lista.get(i).getEndereco();
-            valores[i][3] = lista.get(i).getTelefone();
+            valores0[i][0] = lista.get(i).getCpf();
+            valores0[i][1] = lista.get(i).getNome();
+            valores0[i][2] = lista.get(i).getEndereco();
+            valores0[i][3] = lista.get(i).getTelefone();
         }
-        return new DefaultTableModel(valores, titulos);
+        return new DefaultTableModel(valores0, titulos);
     }
 
     protected TableModel getDadosTabelaProduto() {
@@ -66,7 +66,7 @@ public class JFPrincipal extends javax.swing.JFrame {
                 = {"COD", "Nome", "Quantidade", "Valor"};
         Object[][] valores1 = new Object[lista1.size()][4];
         for (int i = 0; i < lista1.size(); i++) {
-            valores1[i][0] = lista1.get(i).getCpf();
+            valores1[i][0] = lista1.get(i).getCod();
             valores1[i][1] = lista1.get(i).getNome();
             valores1[i][2] = lista1.get(i).getQuantidade();
             valores1[i][3] = lista1.get(i).getValor();
@@ -78,14 +78,14 @@ public class JFPrincipal extends javax.swing.JFrame {
         ArrayList<Pedido> lista = obterTodosPedidos();
         String[] titulos
                 = {"COD", "Nome", "Produto", "Produto"};
-        Object[][] valores1 = new Object[lista.size()][4];
+        Object[][] valores2 = new Object[lista.size()][4];
         for (int i = 0; i < lista.size(); i++) {
-            valores1[i][0] = lista.get(i).getCodPed();
-            valores1[i][1] = lista.get(i).getCodCli();
-            valores1[i][2] = lista.get(i).getCodProdA();
-            valores1[i][3] = lista.get(i).getCodProdB();
+            valores2[i][0] = lista.get(i).getCodPed();
+            valores2[i][1] = lista.get(i).getCodCli();
+            valores2[i][2] = lista.get(i).getCodProdA();
+            valores2[i][3] = lista.get(i).getCodProdB();
         }
-        return new DefaultTableModel(valores1, titulos);
+        return new DefaultTableModel(valores2, titulos);
     }
 
     private void atualizarTabela() {
@@ -117,9 +117,9 @@ public class JFPrincipal extends javax.swing.JFrame {
         }
     }
 
-    protected void persistirPedido(Pedido ped, String cod) {
+    protected void persistirPedido(Pedido ped, String codPed) {
         JDDadosPedidos dados = new JDDadosPedidos(this, true);
-        dados.setDados(ped, cod);
+        dados.setDados(ped, codPed);
         dados.setVisible(true);
         // Modal -> Fica parado aqui até a janela "sumir"
         if (dados.sucesso) {
@@ -391,49 +391,44 @@ public class JFPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(37, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btmSair)
+                        .addComponent(jLabel3)
+                        .addGap(255, 255, 255))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addGap(175, 175, 175)
-                                        .addComponent(jLabel2)))
-                                .addGap(84, 84, 84)))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30))))
+                                .addGap(544, 544, 544)
+                                .addComponent(btmSair))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(21, 21, 21))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(jLabel4)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btmSair)
                 .addContainerGap())
         );
@@ -446,7 +441,7 @@ public class JFPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuAtualizarClienteActionPerformed
 
     private void mnuIncluirClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuIncluirClienteActionPerformed
-        String cpf = entraCPF(true); // recebera codigo digitado
+        String cpf = entraCpfCli(true); // recebera codigo digitado
         if (cpf != null) {
             if (!cpf.isEmpty()) {
                 persistir(null, cpf);
@@ -456,7 +451,7 @@ public class JFPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuIncluirClienteActionPerformed
 
     private void mnuAlterarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAlterarClienteActionPerformed
-        String cpf = entraCPF(false); // recebera codigo digitado
+        String cpf = entraCpfCli(false); // recebera codigo digitado
         if (cpf != null) {
             if (!cpf.isEmpty()) {
                 persistir(obter(cpf), cpf);
@@ -466,7 +461,7 @@ public class JFPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuAlterarClienteActionPerformed
 
     private void mnuExcluirClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuExcluirClienteActionPerformed
-        String cpf = entraCPF(false); // recebera codigo digitado
+        String cpf = entraCpfCli(false); // recebera codigo digitado
         if (cpf != null) {
             if (!cpf.isEmpty()) {
                 remover(cpf);
@@ -478,6 +473,7 @@ public class JFPrincipal extends javax.swing.JFrame {
     private void mnuArmazenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArmazenarActionPerformed
 
         try {
+            ControlePedido.armazenar();
             ControleCliente.armazenar();
             ControleProduto.armazenar();
         } catch (IOException | ClassNotFoundException ex) {
@@ -490,6 +486,7 @@ public class JFPrincipal extends javax.swing.JFrame {
     private void mnuRecuperarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuRecuperarActionPerformed
 
         try {
+            ControlePedido.carregar();
             ControleCliente.carregar();
             ControleProduto.carregar();
         } catch (IOException | ClassNotFoundException ex) {
@@ -507,11 +504,11 @@ public class JFPrincipal extends javax.swing.JFrame {
 
     private void mnuIncluirProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuIncluirProdutoActionPerformed
         // TODO add your handling code here:
-        String cpf = entraCPF(false); // recebera codigo digitado
-        if (cpf != null) {
-            if (!cpf.isEmpty()) {
+        String cod = entraCodProd(true); // recebera codigo digitado
+        if (cod != null) {
+            if (!cod.isEmpty()) {
                 // Modal -> Fica parado aqui até a janela "sumir"
-                persistirProduto(null, "" + cpf);
+                persistirProduto(null, cod);
                 atualizarTabela();
             }
         }
@@ -519,7 +516,7 @@ public class JFPrincipal extends javax.swing.JFrame {
 
     private void mnuAlterarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAlterarProdutoActionPerformed
         // TODO add your handling code here:
-        String cpf = entraCPF(false); // recebera codigo digitado
+        String cpf = entraCodProd(false); // recebera codigo digitado
         if (cpf != null) {
             if (!cpf.isEmpty()) {
                 persistirProduto(obterProduto(cpf), cpf);
@@ -530,7 +527,7 @@ public class JFPrincipal extends javax.swing.JFrame {
 
     private void mnuExcluirProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuExcluirProdutoActionPerformed
         // TODO add your handling code here:
-        String cpf = entraCPF(false); // recebera codigo digitado
+        String cpf = entraCodProd(false); // recebera codigo digitado
         if (cpf != null) {
             if (!cpf.isEmpty()) {
                 removerProduto(cpf);
@@ -550,11 +547,11 @@ public class JFPrincipal extends javax.swing.JFrame {
 
     private void mnuIncluirPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuIncluirPedidosActionPerformed
         // TODO add your handling code here:
-                String cod = entraCPF(false); // recebera codigo digitado
-        if (cod != null) {
-            if (!cod.isEmpty()) {
+                String codProd = entraCodProd(true); // recebera codigo digitado
+        if (codProd != null) {
+            if (!codProd.isEmpty()) {
                 // Modal -> Fica parado aqui até a janela "sumir"
-                persistirPedido(null, "" + cod);
+                persistirPedido(null, codProd);
                 atualizarTabela();
             }
         }
@@ -563,7 +560,7 @@ public class JFPrincipal extends javax.swing.JFrame {
 
     private void mnuAlterarPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAlterarPedidosActionPerformed
         // TODO add your handling code here:
-        String cod = entraCPF(false); // recebera codigo digitado
+        String cod = entraCodPed(false); // recebera codigo digitado
         if (cod != null) {
             if (!cod.isEmpty()) {
                 persistirPedido(obterPedido(cod), cod);
@@ -574,7 +571,7 @@ public class JFPrincipal extends javax.swing.JFrame {
 
     private void mnuExcluirPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuExcluirPedidosActionPerformed
         // TODO add your handling code here:
-        String cod = entraCPF(false); // recebera codigo digitado
+        String cod = entraCodPed(false); // recebera codigo digitado
         if (cod != null) {
             if (!cod.isEmpty()) {
                 removerPedido(cod);
@@ -596,7 +593,7 @@ public class JFPrincipal extends javax.swing.JFrame {
         }
     }
 
-    private String entraCPF(boolean isIncluir) {
+    private String entraCpfCli(boolean isIncluir) {
         // TODO add your handling code here:
         String cpf = "";
         boolean isCadastro = false;
@@ -650,6 +647,115 @@ public class JFPrincipal extends javax.swing.JFrame {
         return cpf;
     }
 
+    private String entraCodProd(boolean isIncluir) {
+        // TODO add your handling code here:
+        String cod = "";
+        boolean isCadastro = false;
+
+        ArrayList<Produto> codProd = (obterTodosProdutos());
+
+        // loop enquanto teclar vazio ou not fim
+        while (cod.isEmpty() || true) {
+            // janela de input do CPF
+            cod = JOptionPane.showInputDialog(this, "Cod");
+            if (cod == null) {
+                return null;
+            } else if (cod.isEmpty()) {
+                // SE DER <ENTER> JOGA MENSAGEM DE ERRO e VOLTA AO LOOP.
+                JOptionPane.showMessageDialog(null, "Por Favor, Digite Algo!",
+                        "Msg do Servidor", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+
+                for (Produto codProd1 : codProd) {
+                    if (cod.equals(codProd1.getCod())) {
+                        if (isIncluir) {
+                            // ENQUANTO NAO ENCONTRA JOGA MENSAGEM DE ERRO e
+                            // VOLTA AO LOOP.
+                            JOptionPane.showMessageDialog(null,
+                                    "Produto Ja Cadastrado!!!",
+                                    "Msg do Servidor",
+                                    JOptionPane.INFORMATION_MESSAGE);
+                            isCadastro = true;
+                            break;
+                        } else {
+                            return cod;
+                        }
+                    }
+                    isCadastro = false;
+                }
+
+                if (!isIncluir) {
+                    // ENQUANTO NAO ENCONTRA JOGA MENSAGEM DE ERRO e VOLTA AO
+                    // LOOP.
+                    JOptionPane.showMessageDialog(null,
+                            "Produto nao encontrado!!!", "Msg do Servidor",
+                            JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    if (!isCadastro) {
+                        return cod;
+                    }
+                }
+            }
+
+        }
+        return cod;
+    }
+
+    private String entraCodPed(boolean isIncluir) {
+        // TODO add your handling code here:
+        String cod = "";
+        boolean isCadastro = false;
+
+        ArrayList<Pedido> codPed = (obterTodosPedidos());
+
+        // loop enquanto teclar vazio ou not fim
+        while (cod.isEmpty() || true) {
+            // janela de input do CPF
+            cod = JOptionPane.showInputDialog(this, "Cod");
+            if (cod == null) {
+                return null;
+            } else if (cod.isEmpty()) {
+                // SE DER <ENTER> JOGA MENSAGEM DE ERRO e VOLTA AO LOOP.
+                JOptionPane.showMessageDialog(null, "Por Favor, Digite Algo!",
+                        "Msg do Servidor", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+
+                for (Pedido codPed1 : codPed) {
+                    if (cod.equals(codPed1.getCodPed())) {
+                        if (isIncluir) {
+                            // ENQUANTO NAO ENCONTRA JOGA MENSAGEM DE ERRO e
+                            // VOLTA AO LOOP.
+                            JOptionPane.showMessageDialog(null,
+                                    "Pedido Ja Cadastrado!!!",
+                                    "Msg do Servidor",
+                                    JOptionPane.INFORMATION_MESSAGE);
+                            isCadastro = true;
+                            break;
+                        } else {
+                            return cod;
+                        }
+                    }
+                    isCadastro = false;
+                }
+
+                if (!isIncluir) {
+                    // ENQUANTO NAO ENCONTRA JOGA MENSAGEM DE ERRO e VOLTA AO
+                    // LOOP.
+                    JOptionPane.showMessageDialog(null,
+                            "Pedido nao encontrado!!!", "Msg do Servidor",
+                            JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    if (!isCadastro) {
+                        return cod;
+                    }
+                }
+            }
+
+        }
+        return cod;
+    }
+
+    
     /**
      * @param args the command line arguments
      */
