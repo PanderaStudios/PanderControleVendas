@@ -18,12 +18,15 @@ import javax.swing.table.TableModel;
 import modelo.Cliente;
 import modelo.Produto;
 import modelo.Pedido;
+import sun.security.util.HostnameChecker;
 
 /**
  *
  * @author aluno
  */
 public class JFPrincipal extends javax.swing.JFrame {
+
+    private String servidorNome;
 
     protected ControleCliente cCliente
             = new ControleCliente();
@@ -92,11 +95,17 @@ public class JFPrincipal extends javax.swing.JFrame {
         jTableCliente.setModel(getDadosTabela());
         jTableProduto.setModel(getDadosTabelaProduto());
         jTablePedido.setModel(getDadosTabelaPedido());
+        helloServer();
     }
 
-//    private void atualizarTabelaProduto() {
-//        jTableProduto.setModel(getDadosTabelaProduto());
-//    }
+    protected void helloServer() {
+        txtServerName.setText(servidorNome);
+    }
+
+    public void setServidorNome(String servidorNome) {
+        this.servidorNome = servidorNome;
+  }
+
     protected void persistir(Cliente c, String cpf) {
         JDDadosCliente dados = new JDDadosCliente(this, true);
         dados.setDados(c, cpf);
@@ -152,6 +161,8 @@ public class JFPrincipal extends javax.swing.JFrame {
     }
 
     protected void preActions() {
+    //    txtServerName.setText(JFPrincipalRemota.getServerName());
+
     }
 
     /**
@@ -160,6 +171,7 @@ public class JFPrincipal extends javax.swing.JFrame {
     public JFPrincipal() {
         preActions();
         initComponents();
+        this.servidorNome = "";
     }
 
     /**
@@ -182,6 +194,8 @@ public class JFPrincipal extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTablePedido = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtServerName = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jRadioConectar = new javax.swing.JRadioButtonMenuItem();
@@ -237,6 +251,11 @@ public class JFPrincipal extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("PEDIDOS");
+
+        jLabel5.setText("Server -->");
+
+        txtServerName.setEditable(false);
+        txtServerName.setEnabled(false);
 
         jMenu2.setText("Conectar");
 
@@ -396,7 +415,11 @@ public class JFPrincipal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addGap(255, 255, 255))
+                        .addGap(82, 82, 82)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtServerName, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -415,7 +438,10 @@ public class JFPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jLabel3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5)
+                    .addComponent(txtServerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -547,7 +573,7 @@ public class JFPrincipal extends javax.swing.JFrame {
 
     private void mnuIncluirPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuIncluirPedidosActionPerformed
         // TODO add your handling code here:
-                String codProd = entraCodProd(true); // recebera codigo digitado
+        String codProd = entraCodProd(true); // recebera codigo digitado
         if (codProd != null) {
             if (!codProd.isEmpty()) {
                 // Modal -> Fica parado aqui até a janela "sumir"
@@ -755,7 +781,6 @@ public class JFPrincipal extends javax.swing.JFrame {
         return cod;
     }
 
-    
     /**
      * @param args the command line arguments
      */
@@ -773,19 +798,12 @@ public class JFPrincipal extends javax.swing.JFrame {
 
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFPrincipal.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFPrincipal.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFPrincipal.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(JFPrincipal.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+
         //</editor-fold>
 
         /* Create and display the form */
@@ -800,6 +818,7 @@ public class JFPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -830,5 +849,7 @@ public class JFPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuIncluirProduto;
     private javax.swing.JMenuItem mnuRecuperar;
     private javax.swing.JMenuItem mnuSair;
+    private javax.swing.JTextField txtServerName;
     // End of variables declaration//GEN-END:variables
+
 }

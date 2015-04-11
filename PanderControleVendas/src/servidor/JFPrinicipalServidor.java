@@ -37,8 +37,9 @@ public class JFPrinicipalServidor extends javax.swing.JFrame {
     }
 
     private void preActions() {
-        servico = new ThServidor(clienteON, clienteOFF, txtStatus, txtNumClientes);
+        servico = new ThServidor(clienteON, clienteOFF, txtStatus, txtNumClientes, jcomboEscolhaServidor.getSelectedItem().toString());
         servico.start();
+        
     }
 
     /**
@@ -110,6 +111,11 @@ public class JFPrinicipalServidor extends javax.swing.JFrame {
         jlnVersao.setText("Versão");
 
         txtStatus.setEditable(false);
+        txtStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtStatusActionPerformed(evt);
+            }
+        });
 
         jlbNumClientes.setText("NUM. CLIENTES:");
 
@@ -248,6 +254,10 @@ public class JFPrinicipalServidor extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btmPararServicoActionPerformed
+
+    private void txtStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtStatusActionPerformed
 
     /**
      * @param args the command line arguments

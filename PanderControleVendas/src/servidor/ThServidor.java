@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -41,12 +42,14 @@ public class ThServidor extends Thread {
 
     private int numCliente;
     private String ipCliente;
+    private String serverName;
 
-    public ThServidor(DefaultListModel clienteON, DefaultListModel clienteOFF, JTextField status, JTextField txtNumClientes) {
+    public ThServidor(DefaultListModel clienteON, DefaultListModel clienteOFF, JTextField status, JTextField txtNumClientes, String serverName) {
         this.status = status;
         this.clienteON = clienteON;
         this.clienteOFF = clienteOFF;
         this.txtNumClientes = txtNumClientes;
+        this.serverName = serverName;
         for (int i = 0; i < ControleCliente.getNUMPORTAS(); i++) {
             try {
                 s0[i] = new ServerSocket();
@@ -60,12 +63,7 @@ public class ThServidor extends Thread {
 
     public void pararServ() {
         //      this.thcliente.interrupt();
-        try {
-            clienteOFF.insertElementAt(numCliente + " - IP: " + sA[0].getInetAddress(), 0);
-
-        } catch (Exception ex) {
-
-        }
+        clienteOFF.insertElementAt(numCliente + " - IP: " + sA[0].getInetAddress(), 0);
         for (int i = 0; i < ControleCliente.getNUMPORTAS(); i++) {
             try {
                 s0[i].close();
@@ -129,12 +127,12 @@ public class ThServidor extends Thread {
                     sA[i] = s0[i].accept();
                 }
 
-                new ThCliente(sA[0],0).start();
-                new ThCliente(sA[1],1).start();
+                new ThCliente(sA[0], serverName).start();
+                new ThProduto(sA[1]).start();
                 new ThPedido(sA[2]).start();
 
                 for (int i = 0; i < ControleCliente.getNUMPORTAS(); i++) {
-                    System.out.println("Cliente Conectado Porta <"+ControleCliente.getPorta(i)+"> " + sA[i].isConnected());
+                    System.out.println("Cliente Conectado Porta <" + ControleCliente.getPorta(i) + "> " + sA[i].isConnected());
                 }
 
             } catch (IOException ex) {

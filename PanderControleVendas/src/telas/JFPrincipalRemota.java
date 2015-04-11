@@ -13,12 +13,17 @@ import modelo.Produto;
 
 public class JFPrincipalRemota extends JFPrincipal {
 
-    private  static String  ipServidor;
+    private static String ipServidor;
     private final int NUMPORTAS = 3;
+    private String serverName;
 
+    /**
+     *
+     */
     public JFPrincipalRemota() {
         preActions();
-      }
+        serverName = "";
+    }
 
     ControleComunicacao c1c[] = new ControleComunicacao[NUMPORTAS];
 //    ControleComunicacao c2p;
@@ -26,11 +31,31 @@ public class JFPrincipalRemota extends JFPrincipal {
     private void carregaTabelas() {
         ArrayList<Cliente> lista = new ArrayList<>();
         lista.addAll(obterTodos());
-        System.out.println("CLIENTE - Vetor Clientes vazio> " + lista.isEmpty());
+        System.out.println("CLIENTE - Vetor Clientes vazio -> " + lista.isEmpty());
 
-        ArrayList<Produto> lista2 = new ArrayList<>();
-        lista2.addAll(obterTodosProdutos());
-        System.out.println("CLIENTE - Vetor Produtos vazio> " + lista2.isEmpty());
+        ArrayList<Produto> lista1 = new ArrayList<>();
+        lista1.addAll(obterTodosProdutos());
+        System.out.println("CLIENTE - Vetor Produtos vazio -> " + lista1.isEmpty());
+
+        ArrayList<Pedido> lista2 = new ArrayList<>();
+        lista2.addAll(obterTodosPedidos());
+        System.out.println("CLIENTE - Vetor Pedidos vazio -> " + lista2.isEmpty());
+    }
+
+    @Override
+    protected void helloServer() {
+        try {
+            c1c[0].enviarTexto("H");
+            System.out.println(c1c[0].receberTexto());
+            System.out.println("Cliente - HELLO SERVER!!!");
+            serverName = c1c[0].receberTexto();
+            super.setServidorNome(serverName);
+            System.out.println("Cliente - ServerName Recebido --> " + serverName);
+
+        } catch (IOException ex) {
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(JFPrincipalRemota.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -245,15 +270,20 @@ public class JFPrincipalRemota extends JFPrincipal {
 
     public static void main(String args[]) {
 
-        if (args.length == 0) 
+        if (args.length == 0) {
             ipServidor = "localhost";
-        else
+        } else {
             ipServidor = Arrays.toString(args);
+        }
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             new JFPrincipalRemota().setVisible(true);
         });
+    }
+
+    public String getServerName() {
+        return serverName;
     }
 
 }
