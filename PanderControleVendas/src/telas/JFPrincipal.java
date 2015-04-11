@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import modelo.Cliente;
+import modelo.ItemPedido;
 import modelo.Produto;
 import modelo.Pedido;
 
@@ -45,6 +46,10 @@ public class JFPrincipal extends javax.swing.JFrame {
 
     protected ArrayList<Pedido> obterTodosPedidos() {
         return cPedido.obterTodosPedidos();
+    }
+
+    protected ArrayList<ItemPedido> obterTodosItens() {
+        return cPedido.obterTodosItens();
     }
 
     protected TableModel getDadosTabela() {
@@ -78,15 +83,29 @@ public class JFPrincipal extends javax.swing.JFrame {
     protected TableModel getDadosTabelaPedido() {
         ArrayList<Pedido> lista = obterTodosPedidos();
         String[] titulos
-                = {"CodProd", "CodCli", "NomeCli", "Produto"};
+                = {"CodProd", "CodCli", "NomeCli", "ValorPed"};
         Object[][] valores2 = new Object[lista.size()][4];
         for (int i = 0; i < lista.size(); i++) {
             valores2[i][0] = lista.get(i).getCodPed();
             valores2[i][1] = lista.get(i).getCodCli();
             valores2[i][2] = lista.get(i).getNomeCli();
-            valores2[i][3] = lista.get(i).getCodProd();
+            valores2[i][3] = lista.get(i).getTotalPed();
         }
         return new DefaultTableModel(valores2, titulos);
+    }
+
+    protected TableModel getDadosTabelaItens() {
+        ArrayList<ItemPedido> lista = obterTodosItens();
+        String[] titulos
+                = {"CodProd", "NomeProd", "QrtCompr", "Total"};
+        Object[][] valores = new Object[lista.size()][4];
+        for (int i = 0; i < lista.size(); i++) {
+            valores[i][0] = lista.get(i).getCodPed();
+            valores[i][1] = lista.get(i).getCodProd();
+            valores[i][2] = lista.get(i).getQtdComprada();
+            valores[i][3] = lista.get(i).getValorCompra();
+        }
+        return new DefaultTableModel(valores, titulos);
     }
 
     private void atualizarTabela() {
@@ -124,9 +143,9 @@ public class JFPrincipal extends javax.swing.JFrame {
         }
     }
 
-    protected void persistirPedido(Pedido ped, String codPed, String codCli) {
-        JDDadosPedidos dados = new JDDadosPedidos(this, true);
-        dados.setDados(ped, codPed, codCli);
+    protected void persistirPedido(Pedido ped, String codPed, String codCli, String nomeCli, String valorPed, DefaultTableModel itensPed) {
+        JDDadosPedidos dados = new JDDadosPedidos(this, true, itensPed);
+        dados.setDados(ped, codPed, codCli, nomeCli, valorPed,  itensPed);
         dados.setVisible(true);
         // Modal -> Fica parado aqui até a janela "sumir"
         if (dados.sucesso) {
@@ -167,7 +186,7 @@ public class JFPrincipal extends javax.swing.JFrame {
      * Creates new form JFPrincipal
      */
     public JFPrincipal() {
-        preActions();
+//        preActions();
         initComponents();
         txtServerName.setText("OFFLINE");
     }
@@ -578,9 +597,9 @@ public class JFPrincipal extends javax.swing.JFrame {
                 String cpf = entraCpfCli(false); // recebera codigo digitado
                 if (cpf != null) {
                     if (!cpf.isEmpty()) {
-                // Modal -> Fica parado aqui até a janela "sumir"
-                persistirPedido(null, codPed, cpf);
-                atualizarTabela();
+                        // Modal -> Fica parado aqui até a janela "sumir"
+                        persistirPedido(null, codPed, cpf, "", "", (DefaultTableModel) getDadosTabelaItens());
+                        atualizarTabela();
                     }
                 }
             }
@@ -593,7 +612,7 @@ public class JFPrincipal extends javax.swing.JFrame {
         String cod = entraCodPed(false); // recebera codigo digitado
         if (cod != null) {
             if (!cod.isEmpty()) {
-                persistirPedido(obterPedido(cod), cod, "");
+                persistirPedido(obterPedido(cod), cod, "", "", "", null);
                 atualizarTabela();
             }
         }

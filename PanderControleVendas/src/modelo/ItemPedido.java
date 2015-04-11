@@ -13,32 +13,32 @@ import java.io.Serializable;
  */
 public class ItemPedido implements Serializable {
 
-    private String codPed;
     private String codProd;
+    private String nomeProd;
     private int qtdComprada;
     private double valorCompra;
 
-    public ItemPedido(String codPed, String codProd, int qtdComprada, double valorCompra) {
-        this.codPed = codPed;
+    public ItemPedido(String codProd, String nomeProd, int qtdComprada, double valorCompra) {
         this.codProd = codProd;
+        this.nomeProd = nomeProd;
         this.qtdComprada = qtdComprada;
         this.valorCompra = valorCompra;
     }
 
     public String getCodPed() {
-        return codPed;
-    }
-
-    public void setCodPed(String codPed) {
-        this.codPed = codPed;
-    }
-
-    public String getCodProd() {
         return codProd;
     }
 
+    public void setCodPed(String codPed) {
+        this.codProd = codPed;
+    }
+
+    public String getCodProd() {
+        return nomeProd;
+    }
+
     public void setCodProd(String codProd) {
-        this.codProd = codProd;
+        this.nomeProd = codProd;
     }
 
     public int getQtdComprada() {

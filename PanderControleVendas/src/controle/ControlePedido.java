@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
+import modelo.ItemPedido;
 import modelo.Pedido;
 
 public class ControlePedido {
@@ -49,8 +50,7 @@ public class ControlePedido {
     }
 
     /**
-     * @return 
-     * @throws java.io.IOException
+     * @return @throws java.io.IOException
      * @throws java.lang.ClassNotFoundException
      * @
      * @param nomeArq
@@ -66,11 +66,11 @@ public class ControlePedido {
         if (!file.exists()) {
             drive = "";
             while (drive.isEmpty() || (!drive.equalsIgnoreCase("c") && !drive.equalsIgnoreCase("d"))) {
-                 if ((drive = JOptionPane.showInputDialog(null, "Informe o Disco do arquivo " + PEDIDOS +  " (Ex. C ou D).",
+                if ((drive = JOptionPane.showInputDialog(null, "Informe o Disco do arquivo " + PEDIDOS + " (Ex. C ou D).",
                         "MSG Servidor", JOptionPane.INFORMATION_MESSAGE)) == null) {
                     drive = "d";
                 }
-           }
+            }
 
             file.renameTo(new File(drive + pasta + PEDIDOS + arquivo));
 
@@ -124,10 +124,26 @@ public class ControlePedido {
         ArrayList<Pedido> lista = new ArrayList<>();
         lista.addAll(bancoPedidos.values());
         Collections.sort(lista, (Pedido t1, Pedido t2)
-                -> (t1.getCodCli()== null)
+                -> (t1.getCodCli() == null)
                         ? (t2.getCodCli() == null) ? 0 : -1
                         : t1.getCodCli().compareTo(t2.getCodCli()));
         return lista;
+    }
+
+    public ArrayList<ItemPedido> obterTodosItens() {
+        ArrayList<Pedido> lista = new ArrayList<>();
+        lista.addAll(bancoPedidos.values());
+
+        ArrayList<ItemPedido> listaItem = new ArrayList<>();
+
+        for (int i = 0; i < lista.size(); i++) {
+            listaItem.add(i, (ItemPedido) lista.get(i).getItem().clone());
+        }
+        Collections.sort(listaItem, (ItemPedido t1, ItemPedido t2)
+                -> (t1.getCodProd() == null)
+                        ? (t2.getCodProd() == null) ? 0 : -1
+                        : t1.getCodProd().compareTo(t2.getCodProd()));
+        return listaItem;
     }
 
 }

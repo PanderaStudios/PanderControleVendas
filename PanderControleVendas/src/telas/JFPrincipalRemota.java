@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import modelo.Cliente;
 import modelo.Pedido;
 import modelo.Produto;
@@ -135,9 +137,9 @@ public class JFPrincipalRemota extends JFPrincipal {
     }
 
     @Override
-    protected void persistirPedido(Pedido ped, String codPed, String codCli) {
-        JDDadosPedidos dadosPed = new JDDadosPedidos(this, true);
-        dadosPed.setDados(ped, codPed, codCli);
+    protected void persistirPedido(Pedido ped, String codPed, String codCli, String nomeCli, String valorCli, DefaultTableModel itensPed) {
+        JDDadosPedidos dadosPed = new JDDadosPedidos(this, true, itensPed);
+        dadosPed.setDados(ped, codPed, codCli, nomeCli, valorCli, itensPed);
         dadosPed.setVisible(true);
         // Modal -> Fica parado aqui até a janela "sumir"
         if (dadosPed.sucesso) {
