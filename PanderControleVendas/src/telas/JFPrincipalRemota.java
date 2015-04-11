@@ -50,7 +50,7 @@ public class JFPrincipalRemota extends JFPrincipal {
             System.out.println("Cliente - HELLO SERVER!!!");
             serverName = c1c[0].receberTexto();
             super.setServidorNome(serverName);
-            System.out.println("Cliente - ServerName Recebido --> " + serverName);
+            System.out.println("Cliente PRemota - ServerName Recebido --> " + serverName);
 
         } catch (IOException ex) {
         } catch (ClassNotFoundException ex) {
@@ -281,9 +281,4 @@ public class JFPrincipalRemota extends JFPrincipal {
             new JFPrincipalRemota().setVisible(true);
         });
     }
-
-    public String getServerName() {
-        return serverName;
-    }
-
 }

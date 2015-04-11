@@ -18,7 +18,6 @@ import javax.swing.table.TableModel;
 import modelo.Cliente;
 import modelo.Produto;
 import modelo.Pedido;
-import sun.security.util.HostnameChecker;
 
 /**
  *
@@ -26,7 +25,7 @@ import sun.security.util.HostnameChecker;
  */
 public class JFPrincipal extends javax.swing.JFrame {
 
-    private String servidorNome;
+//    private String servidorNome;
 
     protected ControleCliente cCliente
             = new ControleCliente();
@@ -99,12 +98,12 @@ public class JFPrincipal extends javax.swing.JFrame {
     }
 
     protected void helloServer() {
-        txtServerName.setText(servidorNome);
     }
 
     public void setServidorNome(String servidorNome) {
-        this.servidorNome = servidorNome;
-  }
+        txtServerName.setText(servidorNome);
+        System.out.println("Cliente Principal - ServerName --> " + servidorNome);
+    }
 
     protected void persistir(Cliente c, String cpf) {
         JDDadosCliente dados = new JDDadosCliente(this, true);
@@ -161,7 +160,7 @@ public class JFPrincipal extends javax.swing.JFrame {
     }
 
     protected void preActions() {
-    //    txtServerName.setText(JFPrincipalRemota.getServerName());
+        //    txtServerName.setText(JFPrincipalRemota.getServerName());
 
     }
 
@@ -171,7 +170,7 @@ public class JFPrincipal extends javax.swing.JFrame {
     public JFPrincipal() {
         preActions();
         initComponents();
-        this.servidorNome = "";
+        txtServerName.setText("OFFLINE");
     }
 
     /**
@@ -255,7 +254,6 @@ public class JFPrincipal extends javax.swing.JFrame {
         jLabel5.setText("Server -->");
 
         txtServerName.setEditable(false);
-        txtServerName.setEnabled(false);
 
         jMenu2.setText("Conectar");
 
