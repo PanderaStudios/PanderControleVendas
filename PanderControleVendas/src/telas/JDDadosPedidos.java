@@ -5,7 +5,12 @@
  */
 package telas;
 
+import controle.ControlePedido;
+import java.awt.Frame;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
+import modelo.ItemPedido;
 import modelo.Pedido;
 
 /**
@@ -17,6 +22,8 @@ public class JDDadosPedidos extends javax.swing.JDialog {
     private DefaultTableModel listaProdPed;
     public boolean sucesso = false;
 
+    protected ControlePedido cPedido;
+
     public void setDados(Pedido ped, String codPed, String codCli, String nomeCli, String valorPed, DefaultTableModel listaProdPed) {
         {
             txtCOD.setText(
@@ -27,7 +34,7 @@ public class JDDadosPedidos extends javax.swing.JDialog {
                     (ped == null) ? nomeCli : ped.getNomeCli());
             txtTotalPed.setText(
                     (ped == null) ? valorPed : ped.getTotalPed());
-            
+
             this.listaProdPed = listaProdPed;
 
             txtCOD.setEditable(false);
@@ -42,14 +49,23 @@ public class JDDadosPedidos extends javax.swing.JDialog {
     public Pedido getDados() {
         return new Pedido(
                 txtCOD.getText(),
-                txtNomeCliente.getText(),
                 txtCodCliente.getText(),
+                txtNomeCliente.getText(),
                 txtTotalPed.getText(),
                 jTablePedido.getModel().toString()
         );
     }
 
-    
+    protected void persistirItensPedido(ItemPedido ped, String codPed, String codCli, String nomeCli, String valorPed, DefaultTableModel itensPed) {
+        JDDadosItensProd dados = new JDDadosItensProd(this, true);
+        dados.setDados(ped, codPed, codCli, nomeCli, valorPed);
+        dados.setVisible(true);
+        // Modal -> Fica parado aqui até a janela "sumir"
+        if (dados.sucesso) {
+            cPedido.persistirItem(dados.getDados());
+        }
+    }
+
     /**
      * Creates new form JDDados
      *
@@ -57,10 +73,11 @@ public class JDDadosPedidos extends javax.swing.JDialog {
      * @param modal
      * @param listaProdPed
      */
-    public JDDadosPedidos(java.awt.Frame parent, boolean modal, DefaultTableModel listaProdPed) {
+    public JDDadosPedidos(java.awt.Frame parent, boolean modal, ControlePedido cPedido, DefaultTableModel listaProdPed) {
         super(parent, modal);
-         this.listaProdPed = listaProdPed;
-       initComponents();
+        this.cPedido = cPedido;
+        this.listaProdPed = listaProdPed;
+        initComponents();
     }
 
     /**
@@ -332,7 +349,7 @@ public class JDDadosPedidos extends javax.swing.JDialog {
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(() -> {
-            JDDadosPedidos dialog = new JDDadosPedidos(new javax.swing.JFrame(), true, null);
+            JDDadosPedidos dialog = new JDDadosPedidos(new javax.swing.JFrame(), true, null, null);
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {

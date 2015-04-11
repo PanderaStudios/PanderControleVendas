@@ -9,11 +9,12 @@ public class Pedido implements Serializable {
     private String codPed;
     private String codCli;
     private String nomeCli;
+    private String totalPed;
+    
     //   private ItemPedido[] codProd;
-    private ItemPedido[] itemPedido;
+    private ItemPedido itemPedido;
     private ArrayList<ItemPedido> item;
 //    String codProdB;
-    private String totalPed;
 
     public Pedido(String codPed, String codCli, String codProd, String nomeCli, String totalPed) {
 //        super(codPed, codProd, 0, 0);
@@ -22,8 +23,10 @@ public class Pedido implements Serializable {
         this.nomeCli = nomeCli;
         this.totalPed = totalPed;
 
+        itemPedido = new ItemPedido(codProd, "", "", "");
+        
         try {
-            item.add(new ItemPedido(codPed, codProd, 0, 0));
+            item.add(new ItemPedido(codProd, "9999999", "10", "150"));
         } catch (NullPointerException ex) {
 
         }
@@ -54,32 +57,20 @@ public class Pedido implements Serializable {
         this.nomeCli = nomeCli;
     }
 
-    //  public String getCodProdB() {
-    //      return codProdB;
-    //  }
-//    public void setCodProdB(String codProdB) {
-//        this.codProdB = codProdB;
-//    }
-    /**
-     * @return the codProd
-     */
-//    public ItemPedido getCodProd() {
-//        return codProd;
-//    }
     /**
      * @param codProd the codProd to set
      */
-    public void setCodProd(String codProd) {
-        ItemPedido itemPedido = new ItemPedido(codPed, codProd, 0, 0);
+    public void setItemPed(String codProd) {
+        itemPedido = new ItemPedido(codProd, "09999990", "20", "200");
     }
 
-    public ItemPedido[] getItemPedido() {
-        return itemPedido;
-    }
+//    public ItemPedido[] getItemPedido() {
+//        return itemPedido;
+//    }
 
-    public void setItemPedido(ItemPedido[] itemPedido) {
-        this.itemPedido = itemPedido;
-    }
+//    public void setItemPedido(ItemPedido[] itemPedido) {
+//        this.itemPedido = itemPedido;
+//    }
 
     public ArrayList<ItemPedido> getItem() {
         return item;

@@ -145,7 +145,7 @@ public class JFPrincipal extends javax.swing.JFrame {
 
     protected void persistirPedido(Pedido ped, String codPed, String codCli, String nomeCli, String valorPed, DefaultTableModel itensPed) {
         JDDadosPedidos dados = new JDDadosPedidos(this, true, itensPed);
-        dados.setDados(ped, codPed, codCli, nomeCli, valorPed,  itensPed);
+        dados.setDados(ped, codPed, codCli, nomeCli, valorPed, itensPed);
         dados.setVisible(true);
         // Modal -> Fica parado aqui até a janela "sumir"
         if (dados.sucesso) {
@@ -598,7 +598,7 @@ public class JFPrincipal extends javax.swing.JFrame {
                 if (cpf != null) {
                     if (!cpf.isEmpty()) {
                         // Modal -> Fica parado aqui até a janela "sumir"
-                        persistirPedido(null, codPed, cpf, "", "", (DefaultTableModel) getDadosTabelaItens());
+                        persistirPedido(null, codPed, cpf, getNomeCli(cpf), "0,00", (DefaultTableModel) getDadosTabelaItens());
                         atualizarTabela();
                     }
                 }
@@ -802,6 +802,18 @@ public class JFPrincipal extends javax.swing.JFrame {
 
         }
         return cod;
+    }
+
+    private String getNomeCli(String cpf) {
+
+        ArrayList<Cliente> cpfCod = (obterTodos());
+
+        for (Cliente cpfCod1 : cpfCod) {
+            if (cpf.equals(cpfCod1.getCpf())) {
+                return cpfCod1.getNome();
+            }
+        }
+        return "";
     }
 
     /**

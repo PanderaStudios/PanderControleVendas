@@ -108,6 +108,10 @@ public class ControlePedido {
         bancoPedidos.put(pedido.getCodPed(), pedido);
     }
 
+    public void persistirItens(ItemPedido itemPedido) {
+        Pedido ped = new Pedido();
+    }
+
     public void remover(String cod) {
         bancoPedidos.remove(cod);
     }

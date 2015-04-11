@@ -15,10 +15,10 @@ public class ItemPedido implements Serializable {
 
     private String codProd;
     private String nomeProd;
-    private int qtdComprada;
-    private double valorCompra;
+    private String qtdComprada;
+    private String valorCompra;
 
-    public ItemPedido(String codProd, String nomeProd, int qtdComprada, double valorCompra) {
+    public ItemPedido(String codProd, String nomeProd, String qtdComprada, String valorCompra) {
         this.codProd = codProd;
         this.nomeProd = nomeProd;
         this.qtdComprada = qtdComprada;
@@ -41,19 +41,19 @@ public class ItemPedido implements Serializable {
         this.nomeProd = codProd;
     }
 
-    public int getQtdComprada() {
+    public String getQtdComprada() {
         return qtdComprada;
     }
 
-    public void setQtdComprada(int qtdComprada) {
+    public void setQtdComprada(String qtdComprada) {
         this.qtdComprada = qtdComprada;
     }
 
-    public double getValorCompra() {
+    public String getValorCompra() {
         return valorCompra;
     }
 
-    public void setValorCompra(double valorCompra) {
+    public void setValorCompra(String valorCompra) {
         this.valorCompra = valorCompra;
     }
 
