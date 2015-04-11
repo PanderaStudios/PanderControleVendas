@@ -2,21 +2,23 @@ package modelo;
 
 import java.io.Serializable;
 
-public class Pedido implements Serializable{
+public class Pedido implements Serializable {
 
     private String codPed;
     private String codCli;
-    private String codProdA;
-    private String codProdB;
+    private String nomeCli;
+    private ItemPedido codProd;
+    
+//    String codProdB;
 
-    public Pedido(String codPed, String codCli, String codProdA, String codProdB) {
+    public Pedido(String codPed, String codCli, String codProd, String nomeCli) {
+//        super(codPed, codProd, 0, 0);
         this.codPed = codPed;
         this.codCli = codCli;
-        this.codProdA = codProdA;
-        this.codProdB = codProdB;
-    }
-
-    public Pedido() {
+        this.nomeCli = nomeCli;
+        this.codProd = new ItemPedido(codPed, codProd, 0, 0);
+    
+//    codProdB=codProd;
     }
 
     public String getCodPed() {
@@ -35,22 +37,34 @@ public class Pedido implements Serializable{
         this.codCli = codCli;
     }
 
-    public String getCodProdA() {
-        return codProdA;
+    public String getNomeCli() {
+        return nomeCli;
     }
 
-    public void setCodProdA(String codProdA) {
-        this.codProdA = codProdA;
+    public void setNomeCli(String nomeCli) {
+        this.nomeCli = nomeCli;
     }
 
-    public String getCodProdB() {
-        return codProdB;
+  //  public String getCodProdB() {
+  //      return codProdB;
+  //  }
+
+//    public void setCodProdB(String codProdB) {
+//        this.codProdB = codProdB;
+//    }
+
+    /**
+     * @return the codProd
+     */
+    public ItemPedido getCodProd() {
+        return codProd;
     }
 
-    public void setCodProdB(String codProdB) {
-        this.codProdB = codProdB;
+    /**
+     * @param codProd the codProd to set
+     */
+    public void setCodProd(ItemPedido codProd) {
+        this.codProd = codProd;
     }
-    
-    
-    
+
 }

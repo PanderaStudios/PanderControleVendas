@@ -66,7 +66,7 @@ public class ControlePedido {
         if (!file.exists()) {
             drive = "";
             while (drive.isEmpty() || (!drive.equalsIgnoreCase("c") && !drive.equalsIgnoreCase("d"))) {
-                 if ((drive = JOptionPane.showInputDialog(null, "Informe o Disco do arquivo Cliente (Ex. C ou D).",
+                 if ((drive = JOptionPane.showInputDialog(null, "Informe o Disco do arquivo " + PEDIDOS +  " (Ex. C ou D).",
                         "MSG Servidor", JOptionPane.INFORMATION_MESSAGE)) == null) {
                     drive = "d";
                 }
@@ -79,7 +79,7 @@ public class ControlePedido {
                 file.mkdir();
                 file = new File(drive + pasta + PEDIDOS + arquivo);
                 file.createNewFile();
-                JOptionPane.showMessageDialog(null, "Arquivo Cliente criado com sucesso em "
+                JOptionPane.showMessageDialog(null, "Arquivo " + PEDIDOS + " criado com sucesso em "
                         + drive + pasta + PEDIDOS + arquivo, "MSG do Servidor",
                         JOptionPane.INFORMATION_MESSAGE);
             }

@@ -26,7 +26,6 @@ import modelo.Pedido;
 public class JFPrincipal extends javax.swing.JFrame {
 
 //    private String servidorNome;
-
     protected ControleCliente cCliente
             = new ControleCliente();
 
@@ -79,13 +78,13 @@ public class JFPrincipal extends javax.swing.JFrame {
     protected TableModel getDadosTabelaPedido() {
         ArrayList<Pedido> lista = obterTodosPedidos();
         String[] titulos
-                = {"COD", "Nome", "Produto", "Produto"};
+                = {"CodProd", "CodCli", "NomeCli", "Produto"};
         Object[][] valores2 = new Object[lista.size()][4];
         for (int i = 0; i < lista.size(); i++) {
             valores2[i][0] = lista.get(i).getCodPed();
             valores2[i][1] = lista.get(i).getCodCli();
-            valores2[i][2] = lista.get(i).getCodProdA();
-            valores2[i][3] = lista.get(i).getCodProdB();
+            valores2[i][2] = lista.get(i).getNomeCli();
+            valores2[i][3] = lista.get(i).getCodProd();
         }
         return new DefaultTableModel(valores2, titulos);
     }
@@ -125,9 +124,9 @@ public class JFPrincipal extends javax.swing.JFrame {
         }
     }
 
-    protected void persistirPedido(Pedido ped, String codPed) {
+    protected void persistirPedido(Pedido ped, String codPed, String codCli) {
         JDDadosPedidos dados = new JDDadosPedidos(this, true);
-        dados.setDados(ped, codPed);
+        dados.setDados(ped, codPed, codCli);
         dados.setVisible(true);
         // Modal -> Fica parado aqui até a janela "sumir"
         if (dados.sucesso) {
@@ -254,6 +253,7 @@ public class JFPrincipal extends javax.swing.JFrame {
         jLabel5.setText("Server -->");
 
         txtServerName.setEditable(false);
+        txtServerName.setEnabled(false);
 
         jMenu2.setText("Conectar");
 
@@ -570,13 +570,19 @@ public class JFPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioDesconectarActionPerformed
 
     private void mnuIncluirPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuIncluirPedidosActionPerformed
-        // TODO add your handling code here:
-        String codProd = entraCodProd(true); // recebera codigo digitado
-        if (codProd != null) {
-            if (!codProd.isEmpty()) {
+// entra com codigo Pedido nao existente
+        String codPed = entraCodPed(true); // recebera codigo digitado
+        if (codPed != null) {
+            if (!codPed.isEmpty()) {
+// entra com codigo cliente existente
+                String cpf = entraCpfCli(false); // recebera codigo digitado
+                if (cpf != null) {
+                    if (!cpf.isEmpty()) {
                 // Modal -> Fica parado aqui até a janela "sumir"
-                persistirPedido(null, codProd);
+                persistirPedido(null, codPed, cpf);
                 atualizarTabela();
+                    }
+                }
             }
         }
 
@@ -587,7 +593,7 @@ public class JFPrincipal extends javax.swing.JFrame {
         String cod = entraCodPed(false); // recebera codigo digitado
         if (cod != null) {
             if (!cod.isEmpty()) {
-                persistirPedido(obterPedido(cod), cod);
+                persistirPedido(obterPedido(cod), cod, "");
                 atualizarTabela();
             }
         }

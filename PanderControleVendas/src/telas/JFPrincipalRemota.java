@@ -52,7 +52,7 @@ public class JFPrincipalRemota extends JFPrincipal {
             super.setServidorNome(serverName);
             System.out.println("Cliente PRemota - ServerName Recebido --> " + serverName);
 
-        } catch (IOException ex) {
+        } catch (NullPointerException | IOException ex) {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(JFPrincipalRemota.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -135,9 +135,9 @@ public class JFPrincipalRemota extends JFPrincipal {
     }
 
     @Override
-    protected void persistirPedido(Pedido ped, String cod) {
+    protected void persistirPedido(Pedido ped, String codPed, String codCli) {
         JDDadosPedidos dadosPed = new JDDadosPedidos(this, true);
-        dadosPed.setDados(ped, cod);
+        dadosPed.setDados(ped, codPed, codCli);
         dadosPed.setVisible(true);
         // Modal -> Fica parado aqui até a janela "sumir"
         if (dadosPed.sucesso) {

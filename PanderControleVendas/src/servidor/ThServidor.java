@@ -16,7 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -87,6 +86,7 @@ public class ThServidor extends Thread {
         }
     }
 
+    @Override
     public void run() {
         // TODO code application logic here
         System.out.println("Classe Servidor Play - run()");
