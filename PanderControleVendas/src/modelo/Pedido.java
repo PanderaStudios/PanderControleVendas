@@ -29,7 +29,7 @@ public class Pedido implements Serializable {
             item.add(new ItemPedido(codProd, "9999999", "10", "150"));
         } catch (NullPointerException ex) {
 
-        }
+//        }
 //    codProdB=codProd;
     }
 
@@ -59,24 +59,14 @@ public class Pedido implements Serializable {
 
     /**
      * @param codProd the codProd to set
+     * @return 
      */
-    public void setItemPed(String codProd) {
-        item.add(new ItemPedido(codProd,  "09999990", "20", "200"));
-    }
-
-//    public ItemPedido[] getItemPedido() {
-//        return itemPedido;
-//    }
-
-//    public void setItemPedido(ItemPedido[] itemPedido) {
-//        this.itemPedido = itemPedido;
-//    }
 
     public ArrayList<ItemPedido> getItem() {
         return item;
     }
 
-    public void setItem(ItemPedido item) {
+    public void setItem(ArrayList<ItemPedido> ItemPedido item) {
         this.item.add(item) ;
     }
 

@@ -344,7 +344,7 @@ public class JDDadosPedidos extends javax.swing.JDialog {
         if (cod != null) {
             if (!cod.isEmpty()) {
                 // Modal -> Fica parado aqui até a janela "sumir"
-                cPedido.persistirItens(null, pedido);
+                cPedido.persistirItens(pedido.getItem(), pedido);
                 atualizarTabela();
             }
         }

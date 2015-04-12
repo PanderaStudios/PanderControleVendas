@@ -108,9 +108,9 @@ public class ControlePedido {
         bancoPedidos.put(pedido.getCodPed(), pedido);
     }
 
-    public void persistirItens(ItemPedido itemPedido, Pedido pedido) {
+    public void persistirItens(ArrayList<ItemPedido> itemPedido, Pedido pedido) {
         pedido.setItem(itemPedido);
-        pedido.setItemPed(itemPedido.getCodProd());
+ //       pedido.setItemPed(itemPedido.getCodProd());
 
         //     ped = new Pedido.;
     }
