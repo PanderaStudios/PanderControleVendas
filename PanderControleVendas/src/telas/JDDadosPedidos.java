@@ -7,9 +7,11 @@ package telas;
 
 import controle.ControlePedido;
 import java.awt.Frame;
-import javax.swing.JDialog;
+import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import modelo.ItemPedido;
 import modelo.Pedido;
 
@@ -23,6 +25,7 @@ public class JDDadosPedidos extends javax.swing.JDialog {
     public boolean sucesso = false;
 
     protected ControlePedido cPedido;
+    private Pedido pedido;
 
     public void setDados(Pedido ped, String codPed, String codCli, String nomeCli, String valorPed, DefaultTableModel listaProdPed) {
         {
@@ -56,13 +59,13 @@ public class JDDadosPedidos extends javax.swing.JDialog {
         );
     }
 
-    protected void persistirItensPedido(ItemPedido ped, String codPed, String codCli, String nomeCli, String valorPed, DefaultTableModel itensPed) {
-        JDDadosItensProd dados = new JDDadosItensProd(this, true);
-        dados.setDados(ped, codPed, codCli, nomeCli, valorPed);
+    protected void persistirItensPedido(ItemPedido itemPed, String codPed, String codCli, String nomeCli, String valorPed, Pedido pedido) {
+        JDDadosItensProd dados = new JDDadosItensProd(null, true);
+        dados.setDados(itemPed, codPed, codCli, nomeCli, valorPed);
         dados.setVisible(true);
         // Modal -> Fica parado aqui até a janela "sumir"
         if (dados.sucesso) {
-            cPedido.persistirItem(dados.getDados());
+            cPedido.persistirItens(dados.getDados(), pedido);
         }
     }
 
@@ -71,13 +74,42 @@ public class JDDadosPedidos extends javax.swing.JDialog {
      *
      * @param parent
      * @param modal
+     * @param cPedido
      * @param listaProdPed
      */
-    public JDDadosPedidos(java.awt.Frame parent, boolean modal, ControlePedido cPedido, DefaultTableModel listaProdPed) {
+    public JDDadosPedidos(Frame parent, boolean modal, ControlePedido cPedido, DefaultTableModel listaProdPed, Pedido pedido) {
         super(parent, modal);
         this.cPedido = cPedido;
         this.listaProdPed = listaProdPed;
+        this.pedido = pedido;
         initComponents();
+    }
+
+    private void atualizarTabela() {
+        jTablePedido.setModel(getDadosTabItemPedido());
+    }
+
+    protected TableModel getDadosTabItemPedido() {
+        String[] titulos
+                = {"CodProd", "NomeProd", "QtdCompr", "ValorPed"};
+        try {
+            ArrayList<ItemPedido> lista = cPedido.obterTodosItens();
+            Object[][] valores2 = new Object[lista.size()][4];
+            for (int i = 0; i < lista.size(); i++) {
+                valores2[i][0] = lista.get(i).getCodProd();
+                valores2[i][1] = lista.get(i).getCodPed(); // trocar por nome protudo
+                valores2[i][2] = lista.get(i).getQtdComprada();
+                valores2[i][3] = lista.get(i).getValorCompra();
+            }
+            return new DefaultTableModel(valores2, titulos);
+        } catch (NullPointerException ex) {
+            Object[][] valores2 = new Object[1][4];
+            valores2[0][0] = "----"; //lista.get(i).getCodProd();
+            valores2[0][1] = "----"; //lista.get(i).getCodPed(); // trocar por nome protudo
+            valores2[0][2] = "----"; //lista.get(i).getQtdComprada();
+            valores2[0][3] = "----"; //lista.get(i).getValorCompra();
+            return new DefaultTableModel(valores2, titulos);
+        }
     }
 
     /**
@@ -98,9 +130,9 @@ public class JDDadosPedidos extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTablePedido = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btmIncluirItem = new javax.swing.JButton();
+        btmAlterarItem = new javax.swing.JButton();
+        btmExcluirItem = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         txtCodCliente = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -139,29 +171,29 @@ public class JDDadosPedidos extends javax.swing.JDialog {
 
         jLabel5.setText("Entrada de Dados do Pedido");
 
-        jTablePedido.setModel(listaProdPed);
+        jTablePedido.setModel(getDadosTabItemPedido());
         jScrollPane3.setViewportView(jTablePedido);
 
-        jButton1.setText("Incluir Item");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btmIncluirItem.setText("Incluir Item");
+        btmIncluirItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btmIncluirItemActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Alterar Item");
-        jButton2.setEnabled(false);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btmAlterarItem.setText("Alterar Item");
+        btmAlterarItem.setEnabled(false);
+        btmAlterarItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btmAlterarItemActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Excluir Item");
-        jButton3.setEnabled(false);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btmExcluirItem.setText("Excluir Item");
+        btmExcluirItem.setEnabled(false);
+        btmExcluirItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btmExcluirItemActionPerformed(evt);
             }
         });
 
@@ -245,11 +277,11 @@ public class JDDadosPedidos extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btmIncluirItem)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(btmAlterarItem)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                .addComponent(btmExcluirItem)
                 .addGap(22, 22, 22))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -280,9 +312,9 @@ public class JDDadosPedidos extends javax.swing.JDialog {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(btmIncluirItem)
+                    .addComponent(btmAlterarItem)
+                    .addComponent(btmExcluirItem))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btmConfirmar)
@@ -303,17 +335,29 @@ public class JDDadosPedidos extends javax.swing.JDialog {
         setVisible(false);
     }//GEN-LAST:event_btmCancelarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btmIncluirItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmIncluirItemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        String cod = "";
+//entraCodProd(true); // recebera codigo digitado
+// janela de input do CPF
+        cod = JOptionPane.showInputDialog(this, "Cod");
+        if (cod != null) {
+            if (!cod.isEmpty()) {
+                // Modal -> Fica parado aqui até a janela "sumir"
+                cPedido.persistirItens(null, pedido);
+                atualizarTabela();
+            }
+        }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btmIncluirItemActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btmAlterarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmAlterarItemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btmAlterarItemActionPerformed
+
+    private void btmExcluirItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmExcluirItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btmExcluirItemActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
@@ -349,7 +393,7 @@ public class JDDadosPedidos extends javax.swing.JDialog {
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(() -> {
-            JDDadosPedidos dialog = new JDDadosPedidos(new javax.swing.JFrame(), true, null, null);
+            JDDadosPedidos dialog = new JDDadosPedidos(new JFrame(), true, null, null, null);
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -361,11 +405,11 @@ public class JDDadosPedidos extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btmAlterarItem;
     private javax.swing.JButton btmCancelar;
     private javax.swing.JButton btmConfirmar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btmExcluirItem;
+    private javax.swing.JButton btmIncluirItem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

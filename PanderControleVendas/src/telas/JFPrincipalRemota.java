@@ -138,7 +138,7 @@ public class JFPrincipalRemota extends JFPrincipal {
 
     @Override
     protected void persistirPedido(Pedido ped, String codPed, String codCli, String nomeCli, String valorCli, DefaultTableModel itensPed) {
-        JDDadosPedidos dadosPed = new JDDadosPedidos(this, true, itensPed);
+        JDDadosPedidos dadosPed = new JDDadosPedidos(this, true, null, itensPed, obterPedido(codCli));
         dadosPed.setDados(ped, codPed, codCli, nomeCli, valorCli, itensPed);
         dadosPed.setVisible(true);
         // Modal -> Fica parado aqui até a janela "sumir"

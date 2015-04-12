@@ -108,8 +108,11 @@ public class ControlePedido {
         bancoPedidos.put(pedido.getCodPed(), pedido);
     }
 
-    public void persistirItens(ItemPedido itemPedido) {
-        Pedido ped = new Pedido();
+    public void persistirItens(ItemPedido itemPedido, Pedido pedido) {
+        pedido.setItem(itemPedido);
+        pedido.setItemPed(itemPedido.getCodProd());
+
+        //     ped = new Pedido.;
     }
 
     public void remover(String cod) {
@@ -140,9 +143,12 @@ public class ControlePedido {
 
         ArrayList<ItemPedido> listaItem = new ArrayList<>();
 
-        for (int i = 0; i < lista.size(); i++) {
-            listaItem.add(i, (ItemPedido) lista.get(i).getItem().clone());
-        }
+        lista.stream().forEach((lista1) -> {
+            for (int x = 0; x < 3; x++) {
+                ItemPedido item = lista1.getItem().get(x);
+                listaItem.add(item);
+            }
+        });
         Collections.sort(listaItem, (ItemPedido t1, ItemPedido t2)
                 -> (t1.getCodProd() == null)
                         ? (t2.getCodProd() == null) ? 0 : -1

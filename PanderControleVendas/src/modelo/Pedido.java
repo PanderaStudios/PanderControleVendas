@@ -12,7 +12,7 @@ public class Pedido implements Serializable {
     private String totalPed;
     
     //   private ItemPedido[] codProd;
-    private ItemPedido itemPedido;
+ //   private ItemPedido itemPedido;
     private ArrayList<ItemPedido> item;
 //    String codProdB;
 
@@ -23,7 +23,7 @@ public class Pedido implements Serializable {
         this.nomeCli = nomeCli;
         this.totalPed = totalPed;
 
-        itemPedido = new ItemPedido(codProd, "", "", "");
+   //     itemPedido = new ItemPedido(codProd, "", "", "");
         
         try {
             item.add(new ItemPedido(codProd, "9999999", "10", "150"));
@@ -61,7 +61,7 @@ public class Pedido implements Serializable {
      * @param codProd the codProd to set
      */
     public void setItemPed(String codProd) {
-        itemPedido = new ItemPedido(codProd, "09999990", "20", "200");
+        item.add(new ItemPedido(codProd,  "09999990", "20", "200"));
     }
 
 //    public ItemPedido[] getItemPedido() {
@@ -76,8 +76,8 @@ public class Pedido implements Serializable {
         return item;
     }
 
-    public void setItem(ArrayList<ItemPedido> item) {
-        this.item = item;
+    public void setItem(ItemPedido item) {
+        this.item.add(item) ;
     }
 
     public String getTotalPed() {
